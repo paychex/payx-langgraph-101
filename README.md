@@ -35,13 +35,53 @@ To tackle this problem, we've built [LangGraph](https://docs.langchain.com/oss/p
 
 ## Pre-work
 
+### Install Python 3.13
+1. Install python from https://www.python.org/downloads/. When installing from the MSI select the "add to PATH" option
+2. Ensure python to your path
+
+Windows User Path Example:
+
+C:\Users\mrichar2\AppData\Local\Programs\Python\Python313\Scripts\
+C:\Users\mrichar2\AppData\Local\Programs\Python\Python313\
+C:\Users\mrichar2\AppData\Local\Programs\Python\Launcher\
+
+3. Verify the install
+
+If in Windows you may need to disable the python.exe and python3.exe App execution aliases. It can be found under settings Apps > Advanced app settings > App execution aliases. You may also need to ensure the path to python is at the top of your PATH.
+```
+python --version
+Python 3.13.8
+pip --version
+pip 25.2 from C:\Users\mrichar2\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip (python 3.13)
+```
+4. Upgrade pip
+```
+python -m pip install --upgrade pip
+```
+
+#### Setup the certificate store
+1. Download [paychex-trust-all.pem](https://repository.paychex.com/ui/repos/tree/General/eba-tools-etc/certs/paychex-trust-all-main.36.pem)
+2. Set the following system environment variables to point to your file:
+
+```
+CURL_CA_BUNDLE = C:/home/keystore/paychex-trust-all.pem
+REQUESTS_CA_BUNDLE = C:/home/keystore/paychex-trust-all.pem
+SSL_CERT_FILE = C:/home/keystore/paychex-trust-all.pem
+```
+
+3. Setup pip to use the Paychex Artifactory pip mirror
+```
+pip config set global.index-url https://repository.paychex.com/artifactory/api/pypi/python-pypi-remote/simple
+```
+
+### Install a Python IDE
+You may use VSCode with python extensions or PyCharm. Be sure that the Jupiter extension/plugin is installed.
+
 ### Clone the LangGraph 101 repo from either Github or Bitbucket
 ```
+# Github
 git clone https://github.com/paychex/payx-langgraph-101.git
-```
-
-
-```
+# Bitbucket
 git clone ssh://git@code.paychex.com/aipe/payx-langgraph-101.git
 ```
 
@@ -50,32 +90,49 @@ git clone ssh://git@code.paychex.com/aipe/payx-langgraph-101.git
 Ensure you have a recent version of `uv` Package manager installed:
 
 ```
+# curl (linux)
 curl -LsSf https://astral.sh/uv/install.sh | sh
+# pip (windows)
+pip install uv
 ```
+
 cd into your cloned repository and copy the example environment file:
 
 ```
 cd payx-langgraph-101
 
+# Linux
 cp .env.example .env
+# Windows
+copy .env.example .env
 ```
 
 You will be supplied with necessary API keys during the session to populate the `.env` file.
 
 
 ### Package Installation
-The Package Index is pointed to Paychex Artifactory (set in pyproject.toml)
+The Package Index is pointed to Paychex Artifactory (set in pyproject.toml). 
+
+If necessary activate your virtual environment (If you use your IDE terminal your IDE may do this automatically for you)
+```
+# Activate the virtual environment (bash)
+source .venv/bin/activate
+# Activate the virtual environment (powershell)
+./.venv/Scripts/activate.ps1
+# Activate the virtual environment (cmd)
+./.venv/Scripts/activate.bat
+```
+
+Run the following in your terminal:
 
 ```
 # Install the packages into a virtual environment
 uv sync --native-tls
-
-# Activate the virtual environment
-source .venv/bin/activate
 ```
+
 ------------------------------------
 
-### Running Agents Locally
+## Running Agents Locally
 
 You can run the agents in this repository locally using `langgraph dev`. This gives you:
 - A local API server for your agents
