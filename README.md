@@ -75,7 +75,9 @@ pip config set global.index-url https://repository.paychex.com/artifactory/api/p
 ```
 
 ### Install a Python IDE
-You may use VSCode with python extensions or PyCharm. Be sure that the Jupiter extension/plugin is installed.
+You may use VSCode with python extensions or PyCharm. Be sure that the Jupyter extension/plugin is installed.
+
+If using VSCode be sure to install python and [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) extensions.
 
 ### Clone the LangGraph 101 repo from either Github or Bitbucket
 ```
@@ -113,6 +115,13 @@ You will be supplied with necessary API keys during the session to populate the 
 ### Package Installation
 The Package Index is pointed to Paychex Artifactory (set in pyproject.toml). 
 
+Run the following in your terminal:
+
+```
+# Install the packages
+uv sync --native-tls
+```
+
 If necessary activate your virtual environment (If you use your IDE terminal your IDE may do this automatically for you)
 ```
 # Activate the virtual environment (bash)
@@ -121,13 +130,6 @@ source .venv/bin/activate
 ./.venv/Scripts/activate.ps1
 # Activate the virtual environment (cmd)
 ./.venv/Scripts/activate.bat
-```
-
-Run the following in your terminal:
-
-```
-# Install the packages into a virtual environment
-uv sync --native-tls
 ```
 
 ------------------------------------
